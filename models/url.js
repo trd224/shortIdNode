@@ -5,7 +5,8 @@ const urlSchema = new mongoose.Schema({
     redirectUrl: {type: String, required: true},
     visitHistory: [{
         timestamp: { type: Number}
-    }]
+    }],
+    createdBy: {type: mongoose.Schema.Types.ObjectId, ref: "users"}
 },{
     timestamps: true
 })

@@ -10,10 +10,13 @@ async function generateNewShortUrl(req, res){
     await Url.create({
         shortId: shortID,
         redirectUrl: body.redirectUrl,
-        visitHistory: [] 
+        visitHistory: [],
+        createdBy: req.user._id
     })
-
-    return res.json({id: shortID});
+    return res.render("home", {
+        id: shortID
+    })
+    //return res.json({id: shortID});
 }
 
 async function visitShortUrl(req, res){
@@ -30,7 +33,14 @@ async function visitShortUrl(req, res){
     res.redirect(entry.redirectUrl);
 }
 
+async function getAllUrls(req, res){
+    const urls = await Url.find({});
+    return res.json(urls);
+    
+}
+
 module.exports = {
     generateNewShortUrl,
-    visitShortUrl
+    visitShortUrl,
+    getAllUrls
 }
